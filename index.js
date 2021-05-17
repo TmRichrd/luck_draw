@@ -44,19 +44,29 @@ function startDraw () {
     disabledBtn = false
     var times = null
     var time = null
+    // 控制几率
+    var n2 = Math.round(Math.random() * 100)
     // 等待3s后随机产生一个数字 用于确认中奖的索引 先让他转几圈
-    setTimeout(() => {
-      drawIndex = Math.round(Math.random() * 9)
-    }, 3000);
+    if (n2 < 99)
+    {
+      setTimeout(() => {
+        drawIndex = 8
+      }, 3000);
+    } else
+    {
+      setTimeout(() => {
+        drawIndex = Math.round(Math.random() * 9)
+      }, 3000);
+    }
     $('.draw_btn').attr('disabled', !disabledBtn);
     times = setInterval(() => {
       if (!disabledBtn)
       {
         time = setTimeout(() => {
-          index++
-          if (index == 9) index = 1
           $('.draw').removeClass('active');
-          $('.draw_boxs')[0].children[index - 1].className = 'draw active'
+          $('.draw_boxs')[0].children[index].className = 'draw active'
+          index++
+          if (index > 8) index = 0
         }, 100);
       }
       if (drawIndex == index)
